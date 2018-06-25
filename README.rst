@@ -1,4 +1,4 @@
-alf
+alf-auth0
 ===
 
 .. image:: https://travis-ci.org/globocom/alf.svg?branch=master
