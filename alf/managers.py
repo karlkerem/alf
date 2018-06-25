@@ -10,11 +10,13 @@ class TokenManager(object):
 
     def __init__(self, token_endpoint, client_id, client_secret,
                  token_storage=None, token_retries=None,
-                 token_request_params=None):
+                 token_request_params=None, audience=None, token_default_expire_in=None):
         self._token_endpoint = token_endpoint
         self._client_id = client_id
         self._client_secret = client_secret
+        self._audience = audience
         self._token_request_params = token_request_params or {}
+        self._token_default_expire_in = token_default_expire_in or 0
         self._token_storage = TokenStorage(token_storage, self._get_cache_key())
         self._session = requests.Session()
 
@@ -40,7 +42,7 @@ class TokenManager(object):
         token_data = self._token_storage.request_token()
         if not token_data:
             token_data = self._request_token()
-            expires_in = token_data.get('expires_in', 0)
+            expires_in = token_data.get('expires_in', self._token_default_expire_in)
             token_data['expires_on'] = Token.calc_expires_on(expires_in)
         return token_data
 
@@ -57,9 +59,12 @@ class TokenManager(object):
         self._token_storage(self._token)
 
     def _request_token(self):
+        data = {'grant_type': 'client_credentials'}
+        if self._audience:
+            data['audience'] = self._audience
         response = self._session.post(
             self._token_endpoint,
-            data={'grant_type': 'client_credentials'},
+            data=data,
             auth=(self._client_id, self._client_secret),
             timeout=self._token_request_params.get('timeout'))
 

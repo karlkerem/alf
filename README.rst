@@ -1,4 +1,4 @@
-alf
+alf-auth0  
 ===
 
 .. image:: https://travis-ci.org/globocom/alf.svg?branch=master
@@ -21,6 +21,7 @@ Features
 * Token expiration control
 * Automatic token storage
 * Automatic retry on status 401 (UNAUTHORIZED)
+* Works with Auth0 Client Credentials Flow
 
 Usage
 -----
@@ -77,6 +78,33 @@ This object can be a Redis, Memcache or your custom object.
     alf.get(resource_uri)
 
     alf.delete(resource_uri)
+
+
+Using alf with Auth0
+-------------------------------
+
+For the Client to work with Auth0 you need to initialize it with
+``audience`` and ``token_default_expire_in``.  
+
+Auth0 is not returning ``expires_in`` when you call authentication endpoint. As a result you should
+set ``token_default_expire_in`` as the same value (or a bit smaller, to be safe) that you 
+have set it in Auth0 management console > APIs > <your_api_name> > Settings > 
+Token Expiration (Seconds) field   
+
+``Audience`` should be set as your API Identifier in Auth0.
+
+.. code-block:: python
+
+    from alf.client import Client
+
+    alf = Client(
+        token_endpoint='http://example.com/token',
+        audience='http://api.example.com/my-api/',
+        token_default_expire_in=86400
+        client_id='client-id',
+        client_secret='secret')
+
+    resource_uri = 'http://example.com/resource'
 
 
 How does it work?
