@@ -21,6 +21,7 @@ Features
 * Token expiration control
 * Automatic token storage
 * Automatic retry on status 401 (UNAUTHORIZED)
+* Works with Auth0 Client Credentials Flow
 
 Usage
 -----
