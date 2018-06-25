@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='alf-auth0',
-    version='0.7.1',
+    version='0.8.1',
     description="OAuth Client adapted to work with Auth0",
     long_description=open('README.rst').read(),
     keywords='oauth client client_credentials requests auth0',
