@@ -21,6 +21,7 @@ class Client(requests.Session):
         self._audience = kwargs.pop('audience', None)
         self._token_storage = kwargs.pop('token_storage', None)
         self._token_request_params = kwargs.pop('token_request_params', None)
+        self._token_default_expire_in = kwargs.pop('token_default_expire_in', None)
 
         _token_retries = kwargs.pop('token_retries', None)
         self._token_manager = self.token_manager_class(
@@ -30,7 +31,8 @@ class Client(requests.Session):
             audience=self._audience,
             token_storage=self._token_storage,
             token_request_params=self._token_request_params,
-            token_retries=_token_retries)
+            token_retries=_token_retries,
+            token_default_expire_in=self._token_default_expire_in)
 
         super(Client, self).__init__(*args, **kwargs)
 

@@ -28,6 +28,7 @@ class TestClient(TestCase):
             token_endpoint=self.end_point,
             client_id='client_id',
             client_secret='client_secret',
+            token_default_expire_in=86400,
             token_request_params={
                 'timeout': 10
             }
@@ -35,6 +36,7 @@ class TestClient(TestCase):
 
         init.assert_called_with(client_id='client_id',
                                 audience=None,
+                                token_default_expire_in=86400,
                                 client_secret='client_secret',
                                 token_endpoint=self.end_point,
                                 token_request_params={
