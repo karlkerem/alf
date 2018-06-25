@@ -34,6 +34,7 @@ class TestClient(TestCase):
         )
 
         init.assert_called_with(client_id='client_id',
+                                audience=None,
                                 client_secret='client_secret',
                                 token_endpoint=self.end_point,
                                 token_request_params={
