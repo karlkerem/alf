@@ -18,6 +18,7 @@ class Client(requests.Session):
         self._token_endpoint = kwargs.pop('token_endpoint')
         self._client_id = kwargs.pop('client_id')
         self._client_secret = kwargs.pop('client_secret')
+        self._audience = kwargs.pop('audience', None)
         self._token_storage = kwargs.pop('token_storage', None)
         self._token_request_params = kwargs.pop('token_request_params', None)
 
@@ -26,6 +27,7 @@ class Client(requests.Session):
             token_endpoint=self._token_endpoint,
             client_id=self._client_id,
             client_secret=self._client_secret,
+            audience=self._audience,
             token_storage=self._token_storage,
             token_request_params=self._token_request_params,
             token_retries=_token_retries)
